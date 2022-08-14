@@ -1,40 +1,25 @@
-import axios, { AxiosResponse } from 'axios';
 import { Events } from './Events';
+import { Update } from './Update';
 
-interface UserProps {
+export interface IUserProps {
   id?: number;
   name?: string;
   age?: number;
 }
 
+const rootUrl = 'http://localhost:3000/users';
+
 export class User {
   public events: Events = new Events();
+  public update: Update<IUserProps> = new Update<IUserProps>(rootUrl);
 
-  constructor(private data: UserProps) {}
+  constructor(private data: IUserProps) {}
 
   get(propName: string): string | number {
     return this.data[propName];
   }
 
-  set(update: UserProps): void {
+  set(update: IUserProps): void {
     this.data = { ...this.data, ...update };
-  }
-
-  fetch(): void {
-    axios
-      .get(`http://localhost:3000/users/${this.get('id')}`)
-      .then((response: AxiosResponse): void => {
-        this.set(response.data);
-      });
-  }
-
-  save(): void {
-    const id = this.get('id');
-
-    if (id) {
-      axios.put(`http://localhost:3000/users/${id}`, this.data);
-    } else {
-      axios.post('http://localhost:3000/users', this.data);
-    }
   }
 }
