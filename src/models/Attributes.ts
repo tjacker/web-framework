@@ -1,4 +1,6 @@
-export class Attributes<T> {
+import { BaseAttributes } from './BaseModel';
+
+export class Attributes<T> implements BaseAttributes<T> {
   constructor(private data: T) {}
 
   getAll(): T {

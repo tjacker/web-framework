@@ -1,10 +1,12 @@
+import { BaseEvents } from './BaseModel';
+
 export type EventCallback = () => void;
 
 interface IEvents {
   [key: string]: EventCallback[];
 }
 
-export class Events {
+export class Events implements BaseEvents {
   private eventsCollection: IEvents = {};
 
   on = (eventName: string, callback: EventCallback): void => {

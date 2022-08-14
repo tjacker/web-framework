@@ -1,10 +1,7 @@
 import axios, { AxiosPromise } from 'axios';
+import { BaseSync, IBaseData } from './BaseModel';
 
-interface IData {
-  id?: number;
-}
-
-export class Update<T extends IData> {
+export class ApiSync<T extends IBaseData> implements BaseSync<T> {
   constructor(public rootUrl: string) {}
 
   fetch(id: number): AxiosPromise {
