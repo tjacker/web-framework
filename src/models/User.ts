@@ -1,5 +1,5 @@
 import { Attributes } from './Attributes';
-import { Events } from './Events';
+import { EventCallback, Events } from './Events';
 import { Update } from './Update';
 
 export interface IUserProps {
@@ -17,5 +17,17 @@ export class User {
 
   constructor(userProps: IUserProps) {
     this.attributes = new Attributes<IUserProps>(userProps);
+  }
+
+  get get() {
+    return this.attributes.get;
+  }
+
+  get on() {
+    return this.events.on;
+  }
+
+  get trigger() {
+    return this.events.trigger;
   }
 }
