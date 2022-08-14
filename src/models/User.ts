@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { Attributes } from './Attributes';
 import { EventCallback, Events } from './Events';
 import { Update } from './Update';
@@ -29,5 +30,32 @@ export class User {
 
   get trigger() {
     return this.events.trigger;
+  }
+
+  set(update: IUserProps): void {
+    this.attributes.set(update);
+    this.trigger('change');
+  }
+
+  async fetch(): Promise<void> {
+    const id = this.get('id');
+
+    if (!id) {
+      throw new Error('Cannot fetch without an id.');
+    }
+
+    const response: AxiosResponse = await this.update.fetch(id);
+    this.set(response.data);
+  }
+
+  async save(): Promise<void> {
+    const user: IUserProps = this.attributes.getAll();
+
+    try {
+      await this.update.save(user);
+      this.trigger('save');
+    } catch {
+      this.trigger('error');
+    }
   }
 }
