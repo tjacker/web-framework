@@ -1,8 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { ApiSync } from './ApiSync';
 import { Attributes } from './Attributes';
+import { BaseCollection } from './BaseCollection';
 import { BaseModel } from './BaseModel';
-import { EventCallback, Events } from './Events';
+import { Events } from './Events';
 
 export interface IUserProps {
   id?: number;
@@ -19,5 +19,9 @@ export class User extends BaseModel<IUserProps> {
       new ApiSync<IUserProps>(rootUrl),
       new Events()
     );
+  }
+
+  static collection(): BaseCollection<User, IUserProps> {
+    return new BaseCollection<User, IUserProps>(rootUrl, (json: IUserProps) => User.init(json));
   }
 }

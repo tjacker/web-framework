@@ -1,9 +1,9 @@
-import { User } from './models/User';
+import { BaseCollection } from './models/BaseCollection';
+import { IUserProps, User } from './models/User';
 
-const user = User.init({ id: 1, name: 'Tim', age: 40 });
+const collection = User.collection();
+collection.fetch();
 
-user.on('save', () => {
-  console.log(user);
+collection.on('change', () => {
+  console.log(collection.models);
 });
-
-user.save();
