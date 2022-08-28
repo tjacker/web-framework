@@ -24,4 +24,9 @@ export class User extends BaseModel<IUserProps> {
   static collection(): BaseCollection<User, IUserProps> {
     return new BaseCollection<User, IUserProps>(rootUrl, (json: IUserProps) => User.init(json));
   }
+
+  setRandomAge(): void {
+    const randomAge = Math.ceil(Math.random() * 100);
+    this.set({ age: randomAge });
+  }
 }
