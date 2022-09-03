@@ -1,14 +1,7 @@
-import { User } from '../models/User';
+import { IUserProps, User } from '../models/User';
+import { BaseView } from './BaseView';
 
-export class UserForm {
-  constructor(public parent: HTMLElement | null, public model: User) {
-    this.bindModelEvents();
-  }
-
-  bindModelEvents(): void {
-    this.model.on('change', (): void => this.render());
-  }
-
+export class UserForm extends BaseView<User, IUserProps> {
   onSetAgeClick = (): void => {
     this.model.setRandomAge();
   };
@@ -46,33 +39,5 @@ export class UserForm {
         </form>
       </div
     `;
-  }
-
-  bindTemplateEvents(fragment: DocumentFragment): void {
-    const eventsMap = this.eventsMap();
-
-    for (const eventKey in eventsMap) {
-      const [eventName, selector] = eventKey.split(':');
-
-      if (Object.prototype.hasOwnProperty.call(eventsMap, eventKey)) {
-        fragment.querySelectorAll(selector).forEach((element) => {
-          element.addEventListener(eventName, eventsMap[eventKey]);
-        });
-      }
-    }
-  }
-
-  render(): void {
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = this.template();
-
-    this.bindTemplateEvents(templateElement.content);
-
-    if (this.parent) {
-      this.parent.innerHTML = '';
-      this.parent.append(templateElement.content);
-    } else {
-      throw new Error('Cannot find HTML element.');
-    }
   }
 }
