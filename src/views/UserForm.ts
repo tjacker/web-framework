@@ -12,32 +12,32 @@ export class UserForm extends BaseView<User, IUserProps> {
     this.model.set({ name });
   };
 
+  onSaveModelClick = (): Promise<void> => this.model.save();
+
   eventsMap(): { [key: string]: () => void } {
     return {
       'click:#setRandomAge': this.onSetAgeClick,
       'click:#updateName': this.onUpdateNameClick,
+      'click:#saveModel': this.onSaveModelClick,
     };
   }
 
   template(): string {
     return `
-      <div>
-        <h1>User Form</h1>
+      <form>
         <div>
-          <p>User name: ${this.model.get('name')}</p>
-          <p>User age: ${this.model.get('age')}</p>
+          <label for="userName">Name:</label>
+          <input type="text" id="userName" name="userName" placeholder="${this.model.get(
+            'name'
+          )}" />
+          <button type="button" id="updateName">Update Name</button>
         </div>
-
-        <form>
-          <div>
-            <label for="userName">Name:</label>
-            <input type="text" id="userName" name="userName" />
-            <button type="button" id="updateName">Update Name</button>
-          </div>
-          <br />
-            <button type="button" id="setRandomAge">Set Random Age</button>
-        </form>
-      </div
+        <br />
+          <button type="button" id="setRandomAge">Set Random Age</button>
+        <br />
+        <br />
+          <button type="button" id="saveModel">Save User</button>
+      </form>
     `;
   }
 }
