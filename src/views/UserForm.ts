@@ -32,11 +32,12 @@ export class UserForm extends BaseView<User, IUserProps> {
           )}" />
           <button type="button" id="updateName">Update Name</button>
         </div>
-        <br />
+        <div style="margin-top: 20px">
           <button type="button" id="setRandomAge">Set Random Age</button>
-        <br />
-        <br />
+        </div>
+        <div style="margin-top: 20px">
           <button type="button" id="saveModel">Save User</button>
+        </div>
       </form>
     `;
   }
